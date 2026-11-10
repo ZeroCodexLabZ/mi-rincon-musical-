@@ -1,0 +1,81 @@
+const FRASES = [
+  { segundo: 0, texto: "Lala-lala-lala-lala-lalala" },
+  { segundo: 5, texto: "Lala-lala-lala-lala-lalala" },
+  { segundo: 10, texto: "Lala-lala-lala-lala-lala-la" },
+
+  { segundo: 20, texto: "Todo tiene el color" },
+  { segundo: 24, texto: "De tus ojos, ¿cómo ves?" },
+  { segundo: 28, texto: "Todo cambia, no así tu voz" },
+  { segundo: 33, texto: "Cuando me hablas en francés limón" },
+
+  { segundo: 40, texto: "En un barco de papel yo volveré" },
+  { segundo: 45, texto: "Por ti mi amor, francés limón" },
+  { segundo: 50, texto: "Las luces de la ciudad se apagarán" },
+  { segundo: 55, texto: "Te besaré, me besarás" },
+
+  { segundo: 65, texto: "Me encanta tu actitud" },
+  { segundo: 69, texto: "Dios conserve tu salud" },
+  { segundo: 73, texto: "Solo por mirarte comprendí" },
+  { segundo: 78, texto: "Para qué yo vine aquí" },
+
+  { segundo: 85, texto: "En un barco de papel yo volveré" },
+  { segundo: 90, texto: "Por ti mi amor, francés limón" },
+  { segundo: 95, texto: "Las luces de la ciudad se apagarán" },
+  { segundo: 100, texto: "Te besaré, me besarás" },
+
+  { segundo: 110, texto: "Lala-lala-lala-lala-lalala" },
+  { segundo: 115, texto: "Lala-lala-lala-lala-lalala" },
+  { segundo: 120, texto: "Lala-lala-lala-lala-lalala" },
+  { segundo: 125, texto: "Lala-lala-lala-lala-lalala" },
+
+  { segundo: 140, texto: "Me encanta tu actitud" },
+  { segundo: 144, texto: "Y tus ojos, ¿cómo ves?" },
+  { segundo: 148, texto: "Todo cambia, no así tu voz" },
+  { segundo: 153, texto: "Cuando me hablas en francés limón" },
+
+  { segundo: 160, texto: "En un barco de papel yo volveré" },
+  { segundo: 165, texto: "Por ti mi amor, francés limón" },
+  { segundo: 170, texto: "Las luces de la ciudad se apagarán" },
+  { segundo: 175, texto: "Te besaré, me besarás" }
+];
+
+
+
+const FRASES = [
+  // Intro / Inicio (0 a 15 segundos)
+  { segundo: 2, texto: "[Inserta aquí la primera línea del inicio]" },
+  { segundo: 7, texto: "[Inserta aquí la siguiente línea]" },
+
+  // Verso 1 (Camilo)
+  { segundo: 14, texto: "[Yo no sé mucho de física...]" },
+  { segundo: 19, texto: "[Pero sé que tu sonrisa...]" },
+  { segundo: 24, texto: "[Que la vida sin ti...]" },
+  { segundo: 28, texto: "[Y que contigo quiero...]" },
+
+  // Pre-coro
+  { segundo: 35, texto: "[Y pasa el tiempo...]" },
+  { segundo: 40, texto: "[No sé qué me hiciste...]" },
+
+  // Coro principal
+  { segundo: 46, texto: "[Y es que te tengo a ti...]" },
+  { segundo: 51, texto: "[Y si te vas, mi amor...]" },
+  { segundo: 56, texto: "[Pa' qué quiero más...]" },
+
+  // Verso 2 (Pedro Capó)
+  { segundo: 65, texto: "[Llegaste tú y me cambiaste...]" },
+  { segundo: 70, texto: "[Eres la dueña de mi cama...]" },
+  { segundo: 75, texto: "[Contigo el mundo se calma...]" },
+  { segundo: 80, texto: "[Y se nos borra cualquier drama...]" },
+
+  // Pre-coro
+  { segundo: 86, texto: "[Y pasa el tiempo y yo te quiero más...]" },
+  { segundo: 91, texto: "[No sé qué me hiciste...]" },
+
+  // Segundo Coro
+  { segundo: 98, texto: "[Y es que te tengo a ti, y no tengo a na'...]" },
+  { segundo: 103, texto: "[Y si te vas, mi amor, yo me voy detrás...]" },
+  { segundo: 108, texto: "[Pa' qué quiero más si te tengo a ti, tutu...]" },
+
+  // Cierre y final
+  { segundo: 125, texto: "[Cierre final de la canción...]" }
+];

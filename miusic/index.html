@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> mi rincon musical🐻🎀</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      color: #8d4765;
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #fff7fb, #fbd6e5, #fff0f6);
+    }
+
+    #decor { position: fixed; inset: 0; pointer-events: none; }
+
+    .adorno {
+      position: absolute;
+      color: #e8a0bd;
+      opacity: .65;
+      animation: flotar 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes flotar {
+      to { transform: translateY(-12px) rotate(14deg); }
+    }
+
+    main {
+      position: relative;
+      width: min(760px, 90vw);
+      min-height: 430px;
+      padding: 34px 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border: 3px solid #f6c2d7;
+      border-radius: 30px;
+      background: rgba(255, 249, 252, .9);
+      box-shadow: 0 18px 55px #bd6c8a2b;
+    }
+
+    h1 { margin: 0 0 22px; font-size: 1.2rem; letter-spacing: .12em; }
+
+    #letras {
+      min-height: 100px;
+      display: grid;
+      place-items: center;
+      font-size: clamp(1.5rem, 5vw, 2.4rem);
+      font-weight: bold;
+      line-height: 1.35;
+    }
+
+    .gatita { position: absolute; width: 95px; left: 20px; bottom: 18px; }
+
+    .controles {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    button, .archivo {
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 20px;
+      background: #f8c7dc;
+      color: #8d4765;
+      font: bold 1rem "Segoe UI", sans-serif;
+      cursor: pointer;
+    }
+
+    button:hover, .archivo:hover { background: #f3a9c7; }
+    input[type="file"] { display: none; }
+    #estado { min-height: 1.5em; }
+
+    @media (max-width: 520px) {
+      main { min-height: 390px; padding-bottom: 110px; }
+      .gatita { width: 78px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="decor" aria-hidden="true"></div>
+
+  <main>
+    <h1>♫ MI RINCÓN MUSICAL ♫</h1>
+    <div id="letras">Elige una canción y pulsa reproducir 🎵</div>
+
+    <svg class="gatita" viewBox="0 0 110 110" aria-label="Gatita decorativa">
+      <path d="M20 48 22 14 45 34Q55 31 65 34L88 14 90 49Q99 59 97 73 94 96 55 97 16 96 13 73 11 59 20 48Z"
+            fill="white" stroke="#e8a0bd" stroke-width="3"/>
+      <ellipse cx="40" cy="63" rx="3" ry="5" fill="#8d4765"/>
+      <ellipse cx="70" cy="63" rx="3" ry="5" fill="#8d4765"/>
+      <ellipse cx="55" cy="71" rx="4" ry="3" fill="#f3a6b6"/>
+      <path d="M39 74 20 70M39 80 20 82M71 74 90 70M71 80 90 82"
+            stroke="#c889a4" stroke-width="2"/>
+      <path d="M78 24c-8-10 1-18 10-11 9-7 18 1 10 11l-10 9z"
+            fill="#ff8fb8" stroke="#e26e9b" stroke-width="2"/>
+    </svg>
+
+    <div class="controles">
+      <label class="archivo" for="archivo">Elegir canción</label>
+      <input id="archivo" type="file" accept="audio/*">
+      <button id="reproducir">▶ Reproducir</button>
+      <button id="pausar">Ⅱ Pausar</button>
+    </div>
+
+    <p id="estado">Elige el MP3 de Niña Bonita de tu computador.</p>
+    <audio id="audio"></audio>
+  </main>
+
+  <script>
+
+    const LETRAS = [
+      { segundo: 3, texto: "te la dedico mi osita" },
+      { segundo: 4.8, texto: "te amo muchoo mi amor" },
+      { segundo: 8, texto: "Esta canción nació de un pensamiento" },
+      { segundo: 10, texto: "Es así" },
+      { segundo: 11, texto: "Y yo solo pienso en ti" },
+      { segundo: 12, texto: "Mi niña bonita" },
+      { segundo: 13, texto: "Mi amor" },
+      { segundo: 14, texto: "Oye" },
+      { segundo: 15, texto: "Tú reconoces un hit cuando lo oyes" },
+
+      { segundo: 17, texto: "Lo que siento por ti" },
+      { segundo: 19, texto: "Es ternura y pasión" },
+      { segundo: 21, texto: "Tú me has hecho sentir" },
+      { segundo: 23, texto: "Que hay en mi corazón" },
+      { segundo: 24, texto: "Tanto amoooooor" },
+      { segundo: 28.60, texto: "Tanto amoooooor" },
+      { segundo: 33, texto: "Yo nací para ti" },
+      { segundo: 35, texto: "Y tú también para mí" },
+      { segundo: 37, texto: "Y ahora sé que morir" },
+      { segundo: 39, texto: "Es tratar de vivir sin tu amoooooor" },
+      { segundo: 44, texto: "Sin tu amoooooor" },
+
+      { segundo: 47.9, texto: "Mi niña bonita, mi dulce princesa" },
+      { segundo: 52, texto: "Me siento en las nubes cuando tú me besas" },
+      { segundo: 56, texto: "Y siento que vuelo más alto que el cielo" },
+      { segundo: 61, texto: "Si tengo de cerca el olor de tu pelo" },
+      { segundo: 64, texto: "Mi niña bonita, brillante lucero" },
+      { segundo: 68, texto: "Te queda pequeña la frase: Te quiero" },
+      { segundo: 72, texto: "Por eso mis labios te dicen te amo" },
+      { segundo: 76, texto: "Cuando estamos juntos más nos enamoramos" },
+
+      { segundo: 80, texto: "Aquí hay amor" },
+      { segundo: 84, texto: "Aquí hay amor" },
+      { segundo: 87, texto: "Aquí hay amor, amor" },
+      { segundo: 90, texto: "Aquí hay amor, amor" },
+      { segundo: 92, texto: "Aquí hay, hay, hay, hay, hay, hay amor" },
+
+      { segundo: 96.50, texto: "Este amor que como espuma sube" },
+      { segundo: 99.40, texto: "Que cuando te tomo de la mano por el parque" },
+      { segundo: 101.45, texto: "Camino en las nubes" },
+      { segundo: 103.40, texto: "Parece mentira que ya no recuerdo nada" },
+      { segundo: 105.45, texto: "Cuando solo estuve" },
+      { segundo: 107, texto: "Nada se podrá comparar" },
+      { segundo: 109, texto: "Con algo tan especial" },
+      { segundo: 111, texto: "Nada se compara con lo nuestro, mi vida" },
+
+      { segundo: 113, texto: "Le agradezco al tiempo" },
+      { segundo: 115.45, texto: "Que me ha demostrado que las cosas buenas llegan" },
+      { segundo: 119, texto: "En cualquier momento" },
+      { segundo: 121.80, texto: "Yo no imaginaba que conocería" },
+      { segundo: 123.60, texto: "Algún día este sentimiento" },
+      { segundo: 125.50, texto: "Un amor puro y natural" },
+      { segundo: 128, texto: "Digno de admirar" },
+      { segundo: 131, texto: "Digno de admirar, princesa" },
+
+      { segundo: 131, texto: "Un amor de fantasía lleno de romance y alegría" },
+      { segundo: 133, texto: "De bello detalle cada día" },
+      { segundo: 135, texto: "Nena, quién lo diría" },
+      { segundo: 136, texto: "Que algún día yo me enamoraría" },
+      { segundo: 137.80, texto: "Y que sin tu amor no viviría" },
+      { segundo: 139, texto: "Cómo sabía que esto pasaría" },
+      { segundo: 140, texto: "Que ibas a ser mía" },
+      { segundo: 142, texto: "Y que yo querría" },
+      { segundo: 143, texto: "Amarte por siempre, mi niña bonita" },
+
+      { segundo: 144.30, texto: "Mi niña bonita, mi dulce princesa" },
+      { segundo: 148, texto: "Me siento en las nubes cuando tú me besas" },
+      { segundo: 152, texto: "Y siento que vuelo más alto que el cielo" },
+      { segundo: 156, texto: "Si tengo de cerca el olor de tu pelo" },
+      { segundo: 160, texto: "Mi niña bonita, brillante lucero" },
+      { segundo: 164, texto: "Te queda pequeña la frase: Te quiero" },
+      { segundo: 168, texto: "Por eso mis labios te dicen te amo" },
+      { segundo: 160, texto: "Cuando estamos juntos más nos enamoramos" },
+
+      { segundo: 176, texto: "Aquí hay amor" },
+      { segundo: 178, texto: "Mi niña bonita" },
+      { segundo: 182, texto: "Aquí hay amor" },
+      { segundo: 182, texto: "Mi niña bonita" },
+      { segundo: 184, texto: "Aquí hay amor, amor" },
+      { segundo: 185, texto: "Aquí hay amor, amor" },
+      { segundo: 188, texto: "Aquí hay, hay, hay, hay, hay, hay amor" },
+
+      { segundo: 190, texto: "Desde este momento" },
+      { segundo: 193, texto: "No podrás sacarte esta canción de tu cabeza" },
+      { segundo: 198, texto: "Chino y Nacho" },
+      { segundo: 201, texto: "Mi niña bonita" },
+      { segundo: 204, texto: "Tú y únicamente tú" },
+      { segundo: 204, texto: "Mi niña bonita" },
+      { segundo: 211, texto: "Más nah" }
+    ];
+
+    const audio = document.querySelector("#audio");
+    const cajaLetras = document.querySelector("#letras");
+    const estado = document.querySelector("#estado");
+    let fraseActual = -1;
+    let temporizadorDeLetras;
+
+    // Corazones y estrellas.
+    const decor = document.querySelector("#decor");
+
+    for (let i = 0; i < 34; i++) {
+      const adorno = document.createElement("span");
+      adorno.className = "adorno";
+      adorno.textContent = i % 2 ? "♡" : "✦";
+      adorno.style.left = `${(i * 37 + 8) % 100}%`;
+      adorno.style.top = `${(i * 61 + 5) % 100}%`;
+      adorno.style.fontSize = `${14 + (i % 3) * 6}px`;
+      decor.appendChild(adorno);
+    }
+
+    document.querySelector("#archivo").addEventListener("change", (evento) => {
+      const archivo = evento.target.files[0];
+      if (!archivo) return;
+
+      audio.src = URL.createObjectURL(archivo);
+      audio.pause();
+      fraseActual = -1;
+      cajaLetras.textContent = "Pulsa reproducir cuando estés lista 💗";
+      estado.textContent = `Canción lista: ${archivo.name}`;
+    });
+
+    function escribirFrase(texto) {
+      clearInterval(temporizadorDeLetras);
+      cajaLetras.textContent = "";
+      let posicion = 0;
+
+      temporizadorDeLetras = setInterval(() => {
+        cajaLetras.textContent += texto[posicion] || "";
+        posicion++;
+
+        if (posicion >= texto.length) {
+          clearInterval(temporizadorDeLetras);
+        }
+      }, 45);
+    }
+
+    function sincronizarLetras() {
+      let encontrada = -1;
+
+      for (let i = 0; i < LETRAS.length; i++) {
+        if (LETRAS[i].segundo <= audio.currentTime) encontrada = i;
+      }
+
+      if (encontrada !== fraseActual) {
+        fraseActual = encontrada;
+
+        if (encontrada === -1) {
+          cajaLetras.textContent = "";
+        } else {
+          escribirFrase(LETRAS[encontrada].texto);
+        }
+      }
+    }
+
+    audio.addEventListener("timeupdate", sincronizarLetras);
+
+    document.querySelector("#reproducir").addEventListener("click", async () => {
+      if (!audio.src) {
+        estado.textContent = "Primero elige el MP3 de Niña Bonita.";
+        return;
+      }
+
+      try {
+        await audio.play();
+        estado.textContent = "¡La música y las frases están en camino! 🎶";
+      } catch {
+        estado.textContent = "No pude reproducir ese archivo. Prueba con el MP3.";
+      }
+    });
+
+    document.querySelector("#pausar").addEventListener("click", () => {
+      audio.pause();
+      clearInterval(temporizadorDeLetras);
+      fraseActual = -1;
+      estado.textContent = "En pausa. Pulsa reproducir para continuar.";
+    });
+
+    audio.addEventListener("ended", () => {
+      clearInterval(temporizadorDeLetras);
+      estado.textContent = "La canción terminó 💗";
+    });
+  </script>
+</body>
+</html>
